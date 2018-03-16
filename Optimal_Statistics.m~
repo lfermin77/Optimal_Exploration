@@ -15,7 +15,7 @@ Optimal_Value=[];
 for i=1: length(Incidence_Matrices)
     current_Incidence = Incidence_Matrices{i}';
     number_of_edges= size(current_Incidence,2);
-    approximation = ones(number_of_edges,1)/number_of_edges;
+    approximation = ones(number_of_edges,1);
 
     current_p = -100;
     graph = i
@@ -44,29 +44,12 @@ for i=1: length(Incidence_Matrices)
         Optimal_Value(j) = -fval;
         %%%%%%%%%%%
        
-        edge_set
         
-        Laplacian_x = current_Incidence*diag(edge_set)*current_Incidence';
-        lambda_vec = sort(eig(Laplacian_x));
-        lambda_vec=lambda_vec(2:end)
-        
-        Laplacian_x = current_Incidence*diag(approximation)*current_Incidence';
-        lambda_vec2 = sort(eig(Laplacian_x));
-        lambda_vec2=lambda_vec2(2:end)
-        
-        
-        plot(lambda_vec)
-        hold on
-        plot(lambda_vec2,'r')
-        hold off
         
         
         
     end
-    i
-    pause(1)
-    
-    
+    pause
 %    laplacian_size = size(Incidence_Matrices{i}' * Incidence_Matrices{i})
 
 
