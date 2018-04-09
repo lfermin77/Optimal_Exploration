@@ -1,4 +1,4 @@
-function [ Euler_Value, Optimal_Value ] = Optimal_Statistics(Incidence_Matrices, p)
+function [ Euler_Value, Optimal_Value, Edges_in_Graph, Optimal_Weights ] = Optimal_Statistics(Incidence_Matrices, p)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -10,7 +10,8 @@ global current_Incidence
 j=0;
 Euler_Value=[];
 Optimal_Value=[];
-
+Edges_in_Graph={};
+Optimal_Weights ={};
 
 for i=1: length(Incidence_Matrices)
     current_Incidence = Incidence_Matrices{i}';
@@ -45,6 +46,7 @@ for i=1: length(Incidence_Matrices)
         %%%%%%%%%%%
        
         edge_set
+       Optimal_Weights{j}=edge_set;
         
         Laplacian_x = current_Incidence*diag(edge_set)*current_Incidence';
         lambda_vec = sort(eig(Laplacian_x));
@@ -54,17 +56,36 @@ for i=1: length(Incidence_Matrices)
         lambda_vec2 = sort(eig(Laplacian_x));
         lambda_vec2=lambda_vec2(2:end)
         
-        
+        figure(1)
         plot(lambda_vec)
         hold on
         plot(lambda_vec2,'r')
         hold off
         
+%        figure(2)
+        [from, into]=incidence_binary2numeric(current_Incidence');
+    
+         edges_ghost=[from; into]';
+         Edges_in_Graph{j}= edges_ghost;
+
+%         EdgeTable = table(edges_ghost,'VariableNames',{'EndNodes'})
+         
+%         G = graph(EdgeTable);
+%          adj=current_Incidence*current_Incidence';
+%          size(adj)
+%         G= graph(adj, 'OmitSelfLoops')
+%         size(from)
+%         size(edges_ghost)
+
+        
+%        Graph_draw = graph(edges_ghost);
+%        Graph_draw = graph(from', into');
+%        plot(Graph_draw)
         
         
     end
     i
-    pause(1)
+%    pause(1)
     
     
 %    laplacian_size = size(Incidence_Matrices{i}' * Incidence_Matrices{i})
